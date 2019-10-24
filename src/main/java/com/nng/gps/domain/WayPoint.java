@@ -1,9 +1,6 @@
 package com.nng.gps.domain;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
+import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import java.sql.Timestamp;
 
@@ -11,14 +8,13 @@ import java.sql.Timestamp;
 public class WayPoint {
     @Id
     @GeneratedValue
-    @Column(name = "ID", nullable = false)
     private Long id;
 
     @NotNull
-    private String latitude;
+    private double latitude;
 
     @NotNull
-    private String longitude;
+    private double longitude;
 
     private String elevation;
 
@@ -27,4 +23,40 @@ public class WayPoint {
     private String symbol;
 
     private Timestamp timestamp;
+
+    @ManyToOne
+    private GPS gps;
+
+    @ManyToOne
+    private TrackSegment trackSegment;
+
+    public WayPoint setLatitude(double latitude) {
+        this.latitude = latitude;
+        return this;
+    }
+
+    public WayPoint setLongitude(double longitude) {
+        this.longitude = longitude;
+        return this;
+    }
+
+    public WayPoint setName(String name) {
+        this.name = name;
+        return this;
+    }
+
+    public WayPoint setSymbol(String symbol) {
+        this.symbol = symbol;
+        return this;
+    }
+
+    public WayPoint setGps(GPS gps) {
+        this.gps = gps;
+        return this;
+    }
+
+    public WayPoint setTrackSegment(TrackSegment trackSegment) {
+        this.trackSegment = trackSegment;
+        return this;
+    }
 }

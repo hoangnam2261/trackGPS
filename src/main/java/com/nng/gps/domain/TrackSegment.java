@@ -7,9 +7,22 @@ import java.util.List;
 public class TrackSegment {
     @Id
     @GeneratedValue
-    @Column(name = "ID", nullable = false)
     private Long id;
 
-    @OneToMany
+    @OneToMany(mappedBy = "trackSegment", cascade = CascadeType.ALL)
     private List<WayPoint> wayPoints;
+
+    @ManyToOne
+    private Track track;
+
+    public TrackSegment setTrack(Track track) {
+        this.track = track;
+        return this;
+    }
+
+    public TrackSegment setWayPoints(List<WayPoint> wayPoints) {
+        this.wayPoints = wayPoints;
+        wayPoints.forEach(wayPoint -> wayPoint.setTrackSegment(this));
+        return this;
+    }
 }
