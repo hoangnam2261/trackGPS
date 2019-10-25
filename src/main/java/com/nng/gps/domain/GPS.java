@@ -50,4 +50,28 @@ public class GPS {
         tracks.forEach(track -> track.setGps(this));
         return this;
     }
+
+    public Long getId() {
+        return id;
+    }
+
+    public String getCreator() {
+        return creator;
+    }
+
+    public String getVersion() {
+        return version;
+    }
+
+    public Metadata getMetadata() {
+        return metadata;
+    }
+
+    public List<WayPoint> getWayPoints() {
+        return wayPoints;
+    }
+
+    public List<Track> getTracks() {
+        return tracks;
+    }
 }

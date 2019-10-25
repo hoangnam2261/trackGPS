@@ -24,4 +24,12 @@ public class Link {
         this.text = text;
         return this;
     }
+
+    public String getHref() {
+        return href;
+    }
+
+    public String getText() {
+        return text;
+    }
 }

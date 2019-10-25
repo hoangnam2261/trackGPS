@@ -4,7 +4,7 @@ import com.nng.gps.domain.GPS;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
 
-//@Repository
+@Repository
 public interface GPSRepository extends CrudRepository<GPS, String> {
-
+    public GPS getById(Long id);
 }

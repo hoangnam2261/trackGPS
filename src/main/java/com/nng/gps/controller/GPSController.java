@@ -5,9 +5,7 @@ import com.nng.gps.mapper.GPSMapper;
 import com.nng.gps.repository.GPSRepository;
 import io.jenetics.jpx.GPX;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
@@ -18,7 +16,7 @@ public class GPSController {
     @Autowired
     GPSRepository gpsRepository;
 
-    @PostMapping("/uploadFile")
+    @PostMapping("gpx/uploadFile")
     public void uploadFile(@RequestParam("file") MultipartFile file) {
         try {
             GPX gpx = GPX.read(file.getInputStream());
@@ -29,4 +27,9 @@ public class GPSController {
         }
     }
 
+    @GetMapping("gpx/{gpxId}")
+    public GPX getGPX(@PathVariable Long gpxId) {
+        GPS byId = gpsRepository.getById(gpxId);
+        return GPSMapper.toDTO(byId);
+    }
 }

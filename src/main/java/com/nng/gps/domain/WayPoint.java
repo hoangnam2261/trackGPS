@@ -16,13 +16,13 @@ public class WayPoint {
     @NotNull
     private double longitude;
 
-    private String elevation;
+    private Double elevation;
 
     private String name;
 
     private String symbol;
 
-    private Timestamp timestamp;
+    private Timestamp time;
 
     @ManyToOne
     private GPS gps;
@@ -50,6 +50,16 @@ public class WayPoint {
         return this;
     }
 
+    public WayPoint setElevation(double elevation) {
+        this.elevation = elevation;
+        return this;
+    }
+
+    public WayPoint setTime(Timestamp time) {
+        this.time = time;
+        return this;
+    }
+
     public WayPoint setGps(GPS gps) {
         this.gps = gps;
         return this;
@@ -58,5 +68,29 @@ public class WayPoint {
     public WayPoint setTrackSegment(TrackSegment trackSegment) {
         this.trackSegment = trackSegment;
         return this;
+    }
+
+    public double getLatitude() {
+        return latitude;
+    }
+
+    public double getLongitude() {
+        return longitude;
+    }
+
+    public Double getElevation() {
+        return elevation;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public String getSymbol() {
+        return symbol;
+    }
+
+    public Timestamp getTime() {
+        return time;
     }
 }

@@ -25,4 +25,8 @@ public class TrackSegment {
         wayPoints.forEach(wayPoint -> wayPoint.setTrackSegment(this));
         return this;
     }
+
+    public List<WayPoint> getWayPoints() {
+        return wayPoints;
+    }
 }

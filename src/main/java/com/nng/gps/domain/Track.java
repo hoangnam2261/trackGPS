@@ -26,4 +26,8 @@ public class Track {
         trackSegments.forEach(trackSegment -> trackSegment.setTrack(this));
         return this;
     }
+
+    public List<TrackSegment> getTrackSegments() {
+        return trackSegments;
+    }
 }

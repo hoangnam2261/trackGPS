@@ -37,4 +37,40 @@ public final class GPSMapper {
                    .collect(Collectors.toList()));
         return gps;
     }
+
+    public static GPX toDTO(GPS gps) {
+        GPX.Builder builder = GPX.builder();
+        builder.creator(gps.getCreator())
+               .version(GPX.Version.of(gps.getVersion()));
+        if (gps.getMetadata() != null) {
+            builder.metadata(MetadataMapper.toDTO(gps.getMetadata()));
+        }
+        builder.wayPoints(gps.getWayPoints()
+                             .stream()
+                             .map(WayPointMapper::toDTO)
+                             .collect(Collectors.toList()));
+        builder.tracks(
+                gps.getTracks()
+                    .stream()
+                    .map(track -> {
+                        io.jenetics.jpx.Track.Builder trackBuilder = io.jenetics.jpx.Track.builder();
+                        trackBuilder.segments(
+                                track.getTrackSegments()
+                                     .stream()
+                                     .map(trackSegment -> {
+                                         io.jenetics.jpx.TrackSegment.Builder trackSegmentBuilder = io.jenetics.jpx.TrackSegment.builder();
+                                         trackSegmentBuilder.points(
+                                                 trackSegment.getWayPoints()
+                                                             .stream()
+                                                             .map(WayPointMapper::toDTO)
+                                                             .collect(Collectors.toList()));
+                                         return trackSegmentBuilder.build();
+                                     })
+                                     .collect(Collectors.toList()));
+                        return trackBuilder.build();
+                    })
+                   .collect(Collectors.toList())
+        );
+        return builder.build();
+    }
 }
