@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<gpx xmlns="http://www.topografix.com/GPX/1/1" version="1.1" creator="OruxMaps v.7.1.6 Donate">
+	<metadata>
+		this is bad file
+	</metadata>
+	<wpt lat="42.2205377">
+		this is bad file
+	</wpt>
+	<wpt lat="42.2208346" lon="-1.4544232">
+		this is bad file
+	</wpt>
+	<trk>
+		<trkseg>
+			<trkpt lat="42.2208895" lon="-1.4580696">
+			this is bad file
+			</trkpt>
+			<trkpt lat="42.2208228">
+			</trkpt>
+			<trkpt lat="42.2207764" lon="-1.4581063">
+				<ele>316.1368</ele>
+				<time>2017-10-22T09:43:26Z</time>
+			</trkpt>
+		</trkseg>
+	</trk>
+</gpx>

@@ -7,6 +7,9 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 
+import java.util.HashMap;
+import java.util.Map;
+
 @ControllerAdvice
 public class AdviceController {
 
@@ -14,8 +17,11 @@ public class AdviceController {
 
     @ExceptionHandler(Exception.class)
     public ResponseEntity<Object> fileValidationError(Exception e) {
+        Map<String, Object> response = new HashMap<>();
+        response.put("message", e.getMessage());
+        response.put("status", HttpStatus.BAD_REQUEST.value());
         return new ResponseEntity<>(
-                e.getMessage(),
+                response,
                 HttpStatus.BAD_REQUEST);
     }
 }

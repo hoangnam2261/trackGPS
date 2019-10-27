@@ -19,7 +19,9 @@ import javax.validation.constraints.Max;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.security.Principal;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @RestController
 public class GPSController {
@@ -34,14 +36,19 @@ public class GPSController {
 
     @PostMapping("gpx/uploadFile")
     @ResponseStatus(HttpStatus.CREATED)
-    public void uploadFile(@RequestParam("file") MultipartFile file, Principal principal) throws IOException, GPXFormatException {
+    public Map<String, Object> uploadFile(@RequestParam("file") MultipartFile file, Principal principal) throws IOException, GPXFormatException {
         if (!GPXFileValidator.validateGPXFile(file, acceptedKBSize)) {
             LOGGER.debug("Wrong format file. File size : {} byte. Content type: {}",
                     file.getSize(),
                     file.getContentType());
             throw new GPXFormatException("File is not in correct standard format.");
         }
-        gpsService.saveGPS(file, principal.getName());
+        GPX gpx = gpsService.parseGPX(file);
+        gpsService.saveGPS(gpx, principal.getName());
+        HashMap<String, Object> response = new HashMap<>();
+        response.put("result", "success");
+        response.put("status", HttpStatus.CREATED.value());
+        return response;
     }
 
     @GetMapping(value = "gpx/{gpxId}", produces = MediaType.APPLICATION_OCTET_STREAM_VALUE)

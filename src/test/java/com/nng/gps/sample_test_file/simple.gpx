@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<gpx xmlns="http://www.topografix.com/GPX/1/1" version="1.1" creator="OruxMaps v.7.1.6 Donate">
+	<metadata>
+		<name>Bardenas Reales: Piskerra y el Paso de los Ciervos</name>
+		<desc>Este espectacular Parque Natural semidesértico</desc>
+		<author></author>
+		<link href="http://www.oruxmaps.com">
+			<text>OruxMaps</text>
+		</link>
+		<time>2017-10-22T09:41:33Z</time>
+	</metadata>
+	<wpt lat="42.2205377" lon="-1.4564538">
+		<name>Sorteamos por arriba</name>
+		<sym>/static/wpt/Waypoint</sym>
+	</wpt>
+	<wpt lat="42.2208346" lon="-1.4544232">
+		<name>Senda</name>
+		<sym>/static/wpt/Waypoint</sym>
+	</wpt>
+	<trk>
+		<trkseg>
+			<trkpt lat="42.2208895" lon="-1.4580696">
+				<ele>315.86</ele>
+				<time>2017-10-22T09:41:38Z</time>
+			</trkpt>
+			<trkpt lat="42.2208228" lon="-1.458099">
+				<ele>316.03888000000006</ele>
+				<time>2017-10-22T09:43:18Z</time>
+			</trkpt>
+			<trkpt lat="42.2207764" lon="-1.4581063">
+				<ele>316.1368</ele>
+				<time>2017-10-22T09:43:26Z</time>
+			</trkpt>
+		</trkseg>
+	</trk>
+</gpx>
