@@ -1,6 +1,9 @@
 package com.nng.gps.domain;
 
+import org.hibernate.annotations.CreationTimestamp;
+
 import javax.persistence.*;
+import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -10,6 +13,8 @@ public class GPS {
     @Id
     @GeneratedValue
     private Long id;
+
+    private String userId;
 
     private String creator;
 
@@ -23,6 +28,18 @@ public class GPS {
 
     @OneToMany(mappedBy = "gps", cascade = CascadeType.ALL)
     private List<Track> tracks;
+
+    @CreationTimestamp
+    private Timestamp createdTime;
+
+    public GPS setCreatedTime(Timestamp createdTime) {
+        this.createdTime = createdTime;
+        return this;
+    }
+
+    public Timestamp getCreatedTime() {
+        return createdTime;
+    }
 
     public GPS setCreator(String creator) {
         this.creator = creator;
@@ -49,6 +66,15 @@ public class GPS {
         this.tracks = tracks;
         tracks.forEach(track -> track.setGps(this));
         return this;
+    }
+
+    public GPS setUserId(String userId) {
+        this.userId = userId;
+        return this;
+    }
+
+    public String getUserId() {
+        return userId;
     }
 
     public Long getId() {

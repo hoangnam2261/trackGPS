@@ -39,5 +39,4 @@ public class H2ServerConfiguration {
     public Server h2WebServer() throws SQLException {
         return Server.createWebServer("-web", "-webAllowOthers", "-webPort", h2WebPort).start();
     }
-
 }

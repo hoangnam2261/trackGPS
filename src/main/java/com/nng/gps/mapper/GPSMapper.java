@@ -4,6 +4,7 @@ import com.nng.gps.domain.GPS;
 import com.nng.gps.domain.Track;
 import com.nng.gps.domain.TrackSegment;
 import io.jenetics.jpx.GPX;
+import org.hibernate.Hibernate;
 
 import java.util.stream.Collectors;
 
@@ -45,32 +46,36 @@ public final class GPSMapper {
         if (gps.getMetadata() != null) {
             builder.metadata(MetadataMapper.toDTO(gps.getMetadata()));
         }
-        builder.wayPoints(gps.getWayPoints()
-                             .stream()
-                             .map(WayPointMapper::toDTO)
-                             .collect(Collectors.toList()));
-        builder.tracks(
-                gps.getTracks()
+        if (Hibernate.isInitialized(gps.getWayPoints())) {
+            builder.wayPoints(gps.getWayPoints()
                     .stream()
-                    .map(track -> {
-                        io.jenetics.jpx.Track.Builder trackBuilder = io.jenetics.jpx.Track.builder();
-                        trackBuilder.segments(
-                                track.getTrackSegments()
-                                     .stream()
-                                     .map(trackSegment -> {
-                                         io.jenetics.jpx.TrackSegment.Builder trackSegmentBuilder = io.jenetics.jpx.TrackSegment.builder();
-                                         trackSegmentBuilder.points(
-                                                 trackSegment.getWayPoints()
-                                                             .stream()
-                                                             .map(WayPointMapper::toDTO)
-                                                             .collect(Collectors.toList()));
-                                         return trackSegmentBuilder.build();
-                                     })
-                                     .collect(Collectors.toList()));
-                        return trackBuilder.build();
-                    })
-                   .collect(Collectors.toList())
-        );
+                    .map(WayPointMapper::toDTO)
+                    .collect(Collectors.toList()));
+        }
+        if (Hibernate.isInitialized(gps.getTracks())) {
+            builder.tracks(
+                    gps.getTracks()
+                            .stream()
+                            .map(track -> {
+                                io.jenetics.jpx.Track.Builder trackBuilder = io.jenetics.jpx.Track.builder();
+                                trackBuilder.segments(
+                                        track.getTrackSegments()
+                                                .stream()
+                                                .map(trackSegment -> {
+                                                    io.jenetics.jpx.TrackSegment.Builder trackSegmentBuilder = io.jenetics.jpx.TrackSegment.builder();
+                                                    trackSegmentBuilder.points(
+                                                            trackSegment.getWayPoints()
+                                                                    .stream()
+                                                                    .map(WayPointMapper::toDTO)
+                                                                    .collect(Collectors.toList()));
+                                                    return trackSegmentBuilder.build();
+                                                })
+                                                .collect(Collectors.toList()));
+                                return trackBuilder.build();
+                            })
+                            .collect(Collectors.toList())
+            );
+        }
         return builder.build();
     }
 }
