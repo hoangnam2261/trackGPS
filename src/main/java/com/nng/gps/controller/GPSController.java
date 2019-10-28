@@ -1,6 +1,6 @@
 package com.nng.gps.controller;
 
-import com.nng.gps.dto.GPSDTO;
+import com.nng.gps.dto.GeneralGPSDTO;
 import com.nng.gps.exception.GPXFormatException;
 import com.nng.gps.service.IGPSService;
 import com.nng.gps.validator.GPXFileValidator;
@@ -63,7 +63,7 @@ public class GPSController {
     }
 
     @GetMapping("gpx/latest")
-    public List<GPSDTO> getLatest(@RequestParam @Max(12) Integer pageSize, @RequestParam Integer offset) {
+    public List<GeneralGPSDTO> getLatest(@RequestParam @Max(12) Integer pageSize, @RequestParam Integer offset) {
         return gpsService.getLatest(pageSize, offset);
     }
 }

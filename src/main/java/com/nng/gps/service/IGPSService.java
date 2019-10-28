@@ -1,6 +1,6 @@
 package com.nng.gps.service;
 
-import com.nng.gps.dto.GPSDTO;
+import com.nng.gps.dto.GeneralGPSDTO;
 import com.nng.gps.exception.GPXFormatException;
 import io.jenetics.jpx.GPX;
 import org.springframework.web.multipart.MultipartFile;
@@ -14,5 +14,5 @@ public interface IGPSService {
 
     GPX getGPXById(Long id);
 
-    List<GPSDTO> getLatest(Integer size, Integer offset);
+    List<GeneralGPSDTO> getLatest(Integer size, Integer offset);
 }

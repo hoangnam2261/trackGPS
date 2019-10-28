@@ -2,7 +2,7 @@ package com.nng.gps.dto;
 
 import java.sql.Timestamp;
 
-public class GPSDTO {
+public class GeneralGPSDTO {
 
     private Long trackId;
 
@@ -16,7 +16,7 @@ public class GPSDTO {
         return title;
     }
 
-    public GPSDTO setTitle(String title) {
+    public GeneralGPSDTO setTitle(String title) {
         this.title = title;
         return this;
     }
@@ -25,7 +25,7 @@ public class GPSDTO {
         return createdTime;
     }
 
-    public GPSDTO setCreatedTime(Timestamp createdTime) {
+    public GeneralGPSDTO setCreatedTime(Timestamp createdTime) {
         this.createdTime = createdTime;
         return this;
     }
@@ -34,7 +34,7 @@ public class GPSDTO {
         return userId;
     }
 
-    public GPSDTO setUserId(String userId) {
+    public GeneralGPSDTO setUserId(String userId) {
         this.userId = userId;
         return this;
     }
@@ -43,7 +43,7 @@ public class GPSDTO {
         return trackId;
     }
 
-    public GPSDTO setTrackId(Long trackId) {
+    public GeneralGPSDTO setTrackId(Long trackId) {
         this.trackId = trackId;
         return this;
     }

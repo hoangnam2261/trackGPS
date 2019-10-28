@@ -1,10 +1,10 @@
 package com.nng.gps.service.impl;
 
 import com.nng.gps.domain.GPS;
-import com.nng.gps.dto.GPSDTO;
+import com.nng.gps.dto.GeneralGPSDTO;
 import com.nng.gps.exception.GPXFormatException;
 import com.nng.gps.mapper.GPSMapper;
-import com.nng.gps.repository.GPSRepository;
+import com.nng.gps.repository.IGPSRepository;
 import com.nng.gps.service.IGPSService;
 import io.jenetics.jpx.GPX;
 import org.hibernate.Hibernate;
@@ -27,7 +27,7 @@ public class GPSServiceImpl implements IGPSService {
     private static final Logger LOGGER = LoggerFactory.getLogger(GPSServiceImpl.class);
 
     @Autowired
-    GPSRepository gpsRepository;
+    IGPSRepository gpsRepository;
 
     @Override
     public void saveGPS(GPX gpx, String userId) {
@@ -57,12 +57,12 @@ public class GPSServiceImpl implements IGPSService {
     }
 
     @Override
-    public List<GPSDTO> getLatest(Integer size, Integer offset) {
+    public List<GeneralGPSDTO> getLatest(Integer size, Integer offset) {
         return gpsRepository
                 .findAll(new PageRequest(offset, size, new Sort("createdTime")))
                 .getContent()
                 .stream()
-                .map(gps -> new GPSDTO()
+                .map(gps -> new GeneralGPSDTO()
                         .setTrackId(gps.getId())
                         .setTitle(gps.getMetadata().getName())
                         .setCreatedTime(gps.getCreatedTime())
