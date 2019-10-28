@@ -3,6 +3,7 @@ package com.nng.gps.service.impl;
 import com.nng.gps.domain.GPS;
 import com.nng.gps.dto.GeneralGPSDTO;
 import com.nng.gps.exception.GPXFormatException;
+import com.nng.gps.exception.NotExistedTrackException;
 import com.nng.gps.mapper.GPSMapper;
 import com.nng.gps.repository.IGPSRepository;
 import com.nng.gps.service.IGPSService;
@@ -49,8 +50,11 @@ public class GPSServiceImpl implements IGPSService {
     }
 
     @Override
-    public GPX getGPXById(Long id) {
+    public GPX getGPXById(Long id) throws NotExistedTrackException {
         GPS gps = gpsRepository.getById(id);
+        if (gps == null) {
+            throw new NotExistedTrackException("Track is non existence");
+        }
         Hibernate.initialize(gps.getWayPoints());
         Hibernate.initialize(gps.getTracks());
         return GPSMapper.toDTO(gps);

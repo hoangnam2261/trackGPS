@@ -11,6 +11,7 @@ import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -20,6 +21,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @RunWith(SpringRunner.class)
 @SpringBootTest
 @AutoConfigureMockMvc
+@Transactional
 public class GPSControllerTest {
 
     @Autowired
@@ -38,7 +40,13 @@ public class GPSControllerTest {
                     .file(mockMultipartFile))
                     .andExpect(status().isUnauthorized());
         }
+    }
 
+    @Test
+    public void testGetGPXNotFound() throws Exception {
+        mockMvc.perform(MockMvcRequestBuilders
+                .get("/gpx/1"))
+                .andExpect(status().isNotFound());
     }
 
     @WithMockUser(username = "hoangnam2261", password = "123456", roles = "USER")

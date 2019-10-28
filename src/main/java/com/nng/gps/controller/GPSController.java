@@ -2,6 +2,7 @@ package com.nng.gps.controller;
 
 import com.nng.gps.dto.GeneralGPSDTO;
 import com.nng.gps.exception.GPXFormatException;
+import com.nng.gps.exception.NotExistedTrackException;
 import com.nng.gps.service.IGPSService;
 import com.nng.gps.validator.GPXFileValidator;
 import io.jenetics.jpx.GPX;
@@ -12,10 +13,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.validation.constraints.Max;
+import javax.validation.constraints.NotNull;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.security.Principal;
@@ -24,6 +27,7 @@ import java.util.List;
 import java.util.Map;
 
 @RestController
+@Validated
 public class GPSController {
     private static final Logger LOGGER = LoggerFactory.getLogger(GPSController.class);
 
@@ -36,7 +40,7 @@ public class GPSController {
 
     @PostMapping("gpx/uploadFile")
     @ResponseStatus(HttpStatus.CREATED)
-    public Map<String, Object> uploadFile(@RequestParam("file") MultipartFile file, Principal principal) throws IOException, GPXFormatException {
+    public Map<String, Object> uploadFile(@RequestParam("file") MultipartFile file, Principal principal) throws GPXFormatException {
         if (!GPXFileValidator.validateGPXFile(file, acceptedKBSize)) {
             LOGGER.debug("Wrong format file. File size : {} byte. Content type: {}",
                     file.getSize(),
@@ -51,13 +55,15 @@ public class GPSController {
         return response;
     }
 
-    @GetMapping(value = "gpx/{gpxId}", produces = MediaType.APPLICATION_OCTET_STREAM_VALUE)
-    public byte[] getFileGPX(@NotBlank @PathVariable Long gpxId) {
+    @GetMapping(value = "gpx/{gpxId}", produces = MediaType.APPLICATION_XML_VALUE)
+    public byte[] getFileGPX(@NotNull @PathVariable Long gpxId) throws NotExistedTrackException, IOException {
+        GPX gpx = gpsService.getGPXById(gpxId);
         ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
         try {
-            GPX.write(gpsService.getGPXById(gpxId), outputStream);
+            GPX.write(gpx, outputStream);
         } catch (IOException e) {
-            e.printStackTrace();
+            LOGGER.error("Write gpx to output stream fail", e);
+            throw e;
         }
         return outputStream.toByteArray();
     }
