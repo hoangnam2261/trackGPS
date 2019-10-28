@@ -17,6 +17,7 @@ import org.springframework.test.context.junit4.SpringRunner;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
+import java.time.Instant;
 import java.time.ZonedDateTime;
 
 @RunWith(SpringRunner.class)
