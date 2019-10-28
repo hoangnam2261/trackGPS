@@ -1,21 +1,41 @@
+# GPS Track
+**A simple way to store and share GPS track online**
 
-## A Story of Passionate Software Engineer
-You have an idea develop a website which allow users to store and share GPS track online (similar to http://www.trackprofiler.com/track/index). After discussion with your team, they helped you to came up with some mock-up files. 
-Front-end side will be developed by another team member. You are the only one who is going to be in charge of the backend service development.
+This is a proof-of-concept version using Spring Boot, Spring JPA, Spring Security.
 
-Because you are so excited to show the idea to your CEO, you decided to reduce the scope and focus one developing 1 WS API with three endpoints:
+## Functional service
+Because this is a prototype version, GPS Track focus on only 1 WS API: GPS API.
 
-- An endpoint that allow users to upload "gpx" file and store mandatory information such as "metadata, waypoint, track" 
-- An endpoint to return a list of "Latest track" from our users
-- An endpoint to allow users to view details of their gpx file
+<img width="880" alt="Service" src="https://github.com/hoangnam2261/trackGPS/raw/master/diagram/system/functional_service.png">
 
-Although this is a prototype version, but you are a professional software engineer. You don't allow yourself to code without a System Diagram or Workflow Diagram, or produce "dirty-code" and code without Unit Tests. Additionally, since this is a fairly small and simple project, you are not allowed to use the Lombok library.
+### GPS Service
+Allow users to upload "gpx" file and store mandatory information such as "metadata, waypoint, track",
+view a list of "Latest track" from our users
+and allow users to view details of their gpx file.
 
-This is all you have right now: 
+Method	| Path	| Description	| User authenticated|
+------------- | ------------------------- | ------------- |:-------------:|
+POST	| /gpx/uploadFile	| Upload "gpx" file	| × |
+GET	| /gpx/{gpxId}	| Get gpx file for view details	|  |
+GET	| /gpx/latest?pageSize={pageSize}&offset={offset}	| View a list of latest tracks	|   |
 
-- https://en.wikipedia.org/wiki/GPS_Exchange_Format
-- Mock-up files
-- A sample gpx file
-- A passionate heart, if you don't like the given mock-up files, feel free to change and show your CEO a better version
-- Your team is a big fan of "Spring IO" tech stack, so they prefers you use Sprint Boot as a starting point
-- An in-memory database is enough for this moment (H2)
+#### Notes
+- In this project, I use H2 as a primary database for gps service. It is very easy switching to another database by change configuration.
+
+## System diagram
+<img width="880" alt="System" src="https://github.com/hoangnam2261/trackGPS/raw/master/diagram/system/system.png">
+
+## Authentication
+In this project, for simplicity, I use basic authentication for API endpoint /gpx/uploadFile.
+Only logged in users can upload the gpx file. I create a demo account with the credential:<br></br>
+User: hoangnam2261<br></br>
+Password: 123456
+
+#### Upload file flow
+<img width="880" alt="Upload file flow" src="https://github.com/hoangnam2261/trackGPS/raw/master/diagram/work_flow/upload_file.png">
+
+#### Get latest tracks
+<img width="880" alt="Get latest tracks" src="https://github.com/hoangnam2261/trackGPS/raw/master/diagram/work_flow/get_latest_track.png">
+
+#### View the details of track file
+<img width="880" alt="Details of track" src="https://github.com/hoangnam2261/trackGPS/raw/master/diagram/work_flow/view_detail.png">
